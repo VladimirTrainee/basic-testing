@@ -1,14 +1,25 @@
-// Uncomment the code below and write your tests
-// import { generateLinkedList } from './index';
+import { generateLinkedList } from './index';
 
 describe('generateLinkedList', () => {
-  // Check match by expect(...).toStrictEqual(...)
   test('should generate linked list from values 1', () => {
-    // Write your test here
+    type Build = { value: number | null; next: Build | null };
+    const start = 2;
+    const length = 10;
+    const list = Array.from(Array(length), (_, index) => start + index);
+    const build = (count: number): Build => {
+      const obj = { value: null, next: null };
+      if (count < 1) return obj;
+      return { value: start + length - count, next: build(count - 1) };
+    };
+    const result = build(length);
+    expect(generateLinkedList(list)).toStrictEqual(result);
   });
 
-  // Check match by comparison with snapshot
   test('should generate linked list from values 2', () => {
-    // Write your test here
+    const start = 2;
+    const length = 10;
+    const list = Array.from(Array(length), (_, index) => start + index);
+    const result = generateLinkedList(list);
+    expect(result).toMatchSnapshot();
   });
 });
